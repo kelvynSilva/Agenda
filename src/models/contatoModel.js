@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
+const { async } = require('regenerator-runtime');
+const validator = require("validator");
 
 const ContatoSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  lastName: { type: String, require: true }
+  lastName: { type: String, required: false, default: '' },
+  tel: { type: String, required: false, default: '' },
+  email: { type: String, required: false, default: '' },
+  cireateDate: { type: Date, default: Date.now }
 });
 
-const ContatoModel = mongoose.model('Home', ContatoSchema);
+const ContatoModel = mongoose.model('Contato', ContatoSchema);
 
 function Contato(body) {
   this.body = body;
@@ -14,15 +18,24 @@ function Contato(body) {
   this.contato = null;
 }
 
-Contato.prototype.register = () => {
-  this.valida()
+Contato.getId = async function (id) {
+  if (typeof id !== 'string') return;
+  const user = await ContatoModel.findById(id);
+  return user;
 }
 
-Contato.prototype.valida = () => {
+Contato.prototype.register = async function () {
+  this.valida();
+  if (this.errors.length > 0) return;
+  this.contato = await ContatoModel.create(this.body);
+}
+
+Contato.prototype.valida = function () {
   this.cleanUp();
 
-  if (!validator.isEmail(this.body.email)) this.errors.push('E-mail inválido!');
-
+  if (this.body.email && !validator.isEmail(this.body.email)) this.errors.push('E-mail inválido!');
+  if (!this.body.name) this.errors.push('Nome é obrigatório.');
+  if (!this.body.email && !this.body.tel) this.errors.push('O cadastro deve conter um contato.');
 }
 
 Contato.prototype.cleanUp = function () {
@@ -32,10 +45,12 @@ Contato.prototype.cleanUp = function () {
     }
   }
 
-
-
   this.body = {
+    name: this.body.name,
+    lastName: this.body.lastName,
+    tel: this.body.tel,
     email: this.body.email,
-    password: this.body.password
   }
 }
+
+module.exports = Contato;
