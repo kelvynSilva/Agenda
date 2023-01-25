@@ -1,6 +1,7 @@
 <%- include('includes/head'); -%>
   <%- include('includes/nav');-%>
 
+
     <div class="container">
       <div class="row">
         <div class="col-lg-2"></div>
@@ -18,15 +19,15 @@
               </div>
               <div class="mb-3">
                 <label>Sobrenome</label>
-                <input name="lastName" type="text" class="form-control">
+                <input value="<%= contato.lastName%>" name="lastName" type="text" class="form-control">
               </div>
               <div class="mb-3">
                 <label>Telefone</label>
-                <input name="tel" type="tel" class="form-control">
+                <input value="<%= contato.tel%>" name="tel" type="tel" class="form-control">
               </div>
               <div class="mb-3">
                 <label>E-mail</label>
-                <input name="email" type="email" class="form-control">
+                <input value="<%= contato.email%>" name="email" type="email" class="form-control">
               </div>
 
               <button type="submit" class="btn btn-primary">Salvar</button>

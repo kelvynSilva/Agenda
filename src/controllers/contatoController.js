@@ -2,7 +2,9 @@ const { async } = require('regenerator-runtime');
 const Contato = require('../models/contatoModel');
 
 exports.index = (req, res) => {
-    res.render('contato');
+    res.render('contato', {
+        contato: {}
+    });
 }
 
 
@@ -25,7 +27,7 @@ exports.register = async (req, res) => {
     }
 }
 
-exports.editINdex = async function (req, res) {
+exports.editIndex = async function (req, res) {
     if (!req.params.id) return res.render('404');
 
     const contato = await Contato.getId(req.params.id);
