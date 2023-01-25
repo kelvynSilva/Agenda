@@ -1,9 +1,10 @@
-exports.index = (req, res) => {
-  res.render('index');
+const { async } = require('regenerator-runtime');
+const Contato = require('../models/contatoModel');
+
+
+exports.index = async (req, res) => {
+  const contatos = await Contato.getContatos();
+  res.render('index', { contatos });
   return;
 };
 
-exports.trataPost = (req, res) => {
-  res.send(req.body);
-  return;
-};
