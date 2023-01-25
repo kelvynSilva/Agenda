@@ -11,29 +11,33 @@
 
           <%- include('includes/messages'); %>
 
-            <form action="/contato/register" method="post">
-              <input type="hidden" name="_csrf" value=<%=csrfToken %>>
-              <div class="mb-3">
-                <label>Nome</label>
-                <input value="<%= contato.name%>" name="name" type="text" class="form-control">
-              </div>
-              <div class="mb-3">
-                <label>Sobrenome</label>
-                <input value="<%= contato.lastName%>" name="lastName" type="text" class="form-control">
-              </div>
-              <div class="mb-3">
-                <label>Telefone</label>
-                <input value="<%= contato.tel%>" name="tel" type="tel" class="form-control">
-              </div>
-              <div class="mb-3">
-                <label>E-mail</label>
-                <input value="<%= contato.email%>" name="email" type="email" class="form-control">
-              </div>
+            <% if(contato._id){%>
+              <form action="/contato/edit/<%=contato._id%>" method="post">
+                <% }else{%>
+                  <form action="/contato/register" method="post">
+                    <%}%>
+                      <input type="hidden" name="_csrf" value=<%=csrfToken %>>
+                      <div class="mb-3">
+                        <label>Nome</label>
+                        <input value="<%= contato.name%>" name="name" type="text" class="form-control">
+                      </div>
+                      <div class="mb-3">
+                        <label>Sobrenome</label>
+                        <input value="<%= contato.lastName%>" name="lastName" type="text" class="form-control">
+                      </div>
+                      <div class="mb-3">
+                        <label>Telefone</label>
+                        <input value="<%= contato.tel%>" name="tel" type="tel" class="form-control">
+                      </div>
+                      <div class="mb-3">
+                        <label>E-mail</label>
+                        <input value="<%= contato.email%>" name="email" type="email" class="form-control">
+                      </div>
 
-              <button type="submit" class="btn btn-primary">Salvar</button>
-            </form>
+                      <button type="submit" class="btn btn-primary">Salvar</button>
+                  </form>
 
-            <div class="col-lg-2"></div>
+                  <div class="col-lg-2"></div>
         </div>
       </div>
 
